@@ -1,0 +1,292 @@
+    /* ---------- 1. Design tokens ---------- */
+    :root {
+      --night: #0f1230;
+      --indigo: #1c2052;
+      --lantern: #ff6a3d;
+      --lantern-glow: #ffb36b;
+      --moon: #f7e6a8;
+      --sakura: #ff9fbd;
+      --ink: #f6f2ff;
+      --ink-dim: #b9b4dc;
+      --line: rgba(247, 230, 168, 0.22);
+
+      --tap: 48px;
+      --gutter: clamp(16px, 5vw, 32px);
+
+      --safe-t: env(safe-area-inset-top, 0px);
+      --safe-r: env(safe-area-inset-right, 0px);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-l: env(safe-area-inset-left, 0px);
+
+      font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+      color-scheme: dark;
+    }
+
+    /* ---------- 2. Base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding-left: var(--safe-l);
+      padding-right: var(--safe-r);
+      color: var(--ink);
+      background:
+        radial-gradient(120% 60% at 50% 0%, var(--indigo) 0%, transparent 70%),
+        var(--night);
+      line-height: 1.55;
+      -webkit-tap-highlight-color: transparent;
+    }
+    h1, h2, p, ul, ol { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    button { font: inherit; touch-action: manipulation; }
+    :focus-visible { outline: 3px solid var(--moon); outline-offset: 3px; }
+
+    .page { 
+    max-width: 720px; margin-inline: auto;
+    background-image: url("wallpaper.png");
+    background-size: cover;
+     }
+     
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); white-space: nowrap;
+    }
+
+    /* ---------- 3. Top bar ---------- */
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      padding: calc(10px + var(--safe-t)) var(--gutter) 10px;
+      background: rgba(15, 18, 48, 0.82);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar__inner {
+      max-width: 720px; margin-inline: auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .topbar__game { font-weight: 700; font-size: 0.95rem; }
+    .timer {
+      font-size: 0.85rem; color: var(--moon);
+      font-variant-numeric: tabular-nums; /* digits keep equal width: no jitter */
+      white-space: nowrap;
+    }
+
+    /* ---------- 4. Hero (lanterns are the one animated moment) ---------- */
+    .snowflakes {
+      position: absolute; top: 0; right: var(--gutter);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .snowflake {
+  color: #fff;
+  font-size: 1rem;
+  font-family: Serif;
+  text-shadow: 0 0 1px #000;
+}
+
+.snowflake img {
+    height: 40px;
+    bottom: 0;
+    background-color: #;
+    display: block;
+}
+
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: clamp(300px, 70vw, 400px);
+      padding: var(--gutter);
+      display: flex; align-items: flex-end;
+    }
+    .moon {
+      position: absolute; left: -10%; top: 14%;
+      width: clamp(130px, 38vw, 210px); aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fffbe3, var(--moon) 55%, #d8c17a);
+      box-shadow: 0 0 70px rgba(247, 230, 168, 0.35);
+    }
+    .star {
+      position: absolute; left: var(--x); top: var(--y);
+      width: var(--s, 3px); height: var(--s, 3px);
+      border-radius: 50%; background: #fff; opacity: 0.8;
+    }
+    .lanterns {
+      position: absolute; top: 0; right: var(--gutter);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .lantern {
+      display: flex; flex-direction: column; align-items: center;
+      transform-origin: 50% 0;
+      animation: sway 4.6s ease-in-out infinite alternate;
+      animation-delay: var(--d, 0s);
+    }
+    .lantern__cord { width: 2px; height: var(--len, 40px); background: var(--line); }
+    .lantern__body {
+      position: relative;
+      width: calc(56px * var(--size, 1)); height: calc(68px * var(--size, 1));
+      border-radius: 46% / 40%;
+      background: radial-gradient(circle at 50% 40%, var(--lantern-glow), var(--lantern) 65%, #c83f1f);
+      box-shadow: 0 0 28px rgba(255, 140, 80, 0.55), inset 0 -8px 0 rgba(0, 0, 0, 0.15);
+    }
+    .lantern__body::before { /* paper ribs */
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: repeating-linear-gradient(90deg, transparent 0 8px, rgba(120, 20, 0, 0.18) 8px 10px);
+    }
+    .lantern__body::after { /* top cap */
+      content: ""; position: absolute; left: 22%; right: 22%; top: -5px; height: 7px;
+      border-radius: 3px; background: #2a1408;
+    }
+    @keyframes sway {
+      from { transform: rotate(-5deg); }
+      to   { transform: rotate(5deg); }
+    }
+
+    .hero__copy { position: relative; max-width: 30ch; }
+    .hero h1 {
+      font-size: clamp(2rem, 9vw, 3.2rem); line-height: 1.05;
+      font-weight: 800; letter-spacing: -0.01em;
+      text-shadow: 0 2px 18px rgba(15, 18, 48, 0.8);
+    }
+    .hero__lede { margin-top: 10px; color: var(--ink); text-shadow: 0 1px 10px rgba(15, 18, 48, 0.9); }
+    .hero__dates { margin-top: 6px; font-size: 0.85rem; color: var(--ink-dim); }
+
+    /* ---------- 5. Sections ---------- */
+    main { padding: 0 var(--gutter) calc(var(--tap) + 96px + var(--safe-b)); }
+    section { margin-top: 32px; }
+    h2 { font-size: 1.3rem; font-weight: 700; }
+    .section-note { margin-top: 4px; color: var(--ink-dim); font-size: 0.92rem; }
+
+    /* Login bonus grid */
+    .days {
+      margin-top: 14px;
+      display: grid; gap: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .day {
+      position: relative;
+      display: grid; justify-items: center; align-content: center; gap: 4px;
+      min-height: 100px; padding: 12px 6px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+    }
+    .day--bonus {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(255, 159, 189, 0.24), rgba(255, 106, 61, 0.22));
+    }
+    .day__label { font-size: 0.8rem; color: var(--ink-dim); }
+    .day__qty { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .reward { width: 30px; height: 30px; }
+    .day--bonus .reward { width: 38px; height: 38px; }
+    .r-gem { color: #7fe3ff; }
+    .r-coin { color: var(--moon); }
+    .r-ticket { color: var(--sakura); }
+    .r-shard { color: var(--lantern-glow); }
+
+    .day .check {
+      position: absolute; top: 6px; right: 6px; width: 18px; height: 18px;
+      color: var(--moon); opacity: 0; transform: scale(0.4);
+      transition: opacity 0.2s, transform 0.25s cubic-bezier(0.2, 1.6, 0.4, 1);
+    }
+    .day.is-claimed { opacity: 0.62; }
+    .day.is-claimed .check { opacity: 1; transform: none; }
+    .day.is-today { border-color: var(--lantern-glow); }
+    .day.is-today::after { /* pulsing ring: animates opacity + transform only */
+      content: ""; position: absolute; inset: -3px; border-radius: 17px;
+      border: 2px solid var(--lantern-glow); pointer-events: none;
+      animation: ring 1.8s ease-out infinite;
+    }
+    .day.just-claimed .reward { animation: pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1); }
+    @keyframes ring { from { opacity: 0.9; transform: scale(1); } to { opacity: 0; transform: scale(1.08); } }
+    @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
+
+    @media (min-width: 640px) {
+      .days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+      .day--bonus { grid-column: auto; }
+      .day--bonus .reward { width: 30px; height: 30px; }
+    }
+
+    /* Missions: rows with hairlines, not a wall of identical cards */
+    .missions { margin-top: 8px; }
+    .mission { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .mission:last-child { border-bottom: 0; }
+    .mission__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .mission__title { font-weight: 600; }
+    .mission__reward { font-size: 0.85rem; color: var(--moon); white-space: nowrap; }
+    .bar {
+      margin-top: 10px; height: 8px; border-radius: 99px;
+      background: rgba(255, 255, 255, 0.1); overflow: hidden;
+    }
+    .bar > i { /* scaleX instead of width: stays on the compositor */
+      display: block; height: 100%; border-radius: inherit;
+      background: linear-gradient(90deg, var(--sakura), var(--lantern));
+      transform-origin: left; transform: scaleX(var(--p, 0));
+    }
+    .mission__meta { margin-top: 6px; font-size: 0.82rem; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+
+    /* Info accordion (native <details>: zero JS, keyboard accessible) */
+    details { border-bottom: 1px solid var(--line); }
+    summary {
+      min-height: var(--tap); display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; font-weight: 600; list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: ""; width: 8px; height: 8px; margin-right: 4px;
+      border-right: 2px solid var(--moon); border-bottom: 2px solid var(--moon);
+      transform: rotate(45deg); transition: transform 0.2s;
+    }
+    details[open] summary::after { transform: rotate(-135deg); }
+    details p { padding: 0 0 14px; color: var(--ink-dim); font-size: 0.92rem; max-width: 60ch; }
+    .reset {
+      margin-top: 18px; min-height: var(--tap); padding: 0 4px;
+      background: none; border: 0; color: var(--ink-dim); text-decoration: underline; cursor: pointer;
+    }
+
+    /* ---------- 6. Sticky call-to-action ---------- */
+    .cta-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+      padding: 14px calc(var(--gutter) + var(--safe-r)) calc(12px + var(--safe-b)) calc(var(--gutter) + var(--safe-l));
+      background: linear-gradient(to top, var(--night) 62%, rgba(15, 18, 48, 0));
+    }
+    .cta {
+      position: relative; overflow: hidden; display: block;
+      width: 100%; max-width: 720px; margin-inline: auto;
+      min-height: 52px; border: 0; border-radius: 14px;
+      font-weight: 800; font-size: 1.05rem; color: #2a0d02;
+      background: linear-gradient(180deg, var(--lantern-glow), var(--lantern));
+      box-shadow: 0 4px 0 #b53f1c;
+      cursor: pointer;
+      transition: transform 0.08s, box-shadow 0.08s;
+    }
+    .cta::after { /* shine sweep */
+      content: ""; position: absolute; top: 0; left: 0; width: 30%; height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+      transform: skewX(-20deg) translateX(-160%);
+      animation: shine 3.4s ease-in-out infinite;
+    }
+    .cta:active { transform: translateY(3px); box-shadow: 0 1px 0 #b53f1c; }
+    .cta:disabled {
+      cursor: default; color: var(--ink-dim);
+      background: #34386b; box-shadow: 0 4px 0 #23264d;
+    }
+    .cta:disabled::after { animation: none; display: none; }
+    @keyframes shine { 0%, 55% { transform: skewX(-20deg) translateX(-160%); } 100% { transform: skewX(-20deg) translateX(520%); } }
+    @media (hover: hover) { .cta:not(:disabled):hover { filter: brightness(1.06); } }
+
+    /* Toast */
+    .toast {
+      position: fixed; left: 50%; z-index: 20;
+      bottom: calc(var(--tap) + 44px + var(--safe-b));
+      max-width: calc(100% - 2 * var(--gutter));
+      padding: 10px 16px; border-radius: 99px;
+      background: var(--moon); color: #2a2208; font-weight: 600; font-size: 0.92rem;
+      transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---------- 7. Respect reduced-motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+    }
