@@ -1,10 +1,10 @@
     :root {
       --night: #0f1230;
       --indigo: #1c2052;
-      --lantern: #ff6a3d;
-      --lantern-glow: #ffb36b;
-      --moon: #f7e6a8;
-      --sakura: #ff9fbd;
+      --cta-button: #ff6a3d;
+      --cta-button-light: #ffb36b;
+      --sub-label: #f7e6a8;
+      --progress-bar: #ff9fbd;
       --ink: #f6f2ff;
       --ink-dim: #b9b4dc;
       --line: rgba(247, 230, 168, 0.22);
@@ -54,7 +54,7 @@
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .topbar__label { font-weight: 700; font-size: 0.95rem; }
-    .timer {font-size: 0.85rem; color: var(--moon);}
+    .timer {font-size: 0.85rem; color: var(--sub-label);}
 
 
     .event_title { position: relative; max-width: 30ch; padding: 16px; font-size: 1.2rem;}
@@ -89,14 +89,14 @@
     .mission:last-child { border-bottom: 0; }
     .mission__head { display: flex; justify-content: space-between; gap: 12px; }
     .mission__title { font-weight: 600; }
-    .mission__reward { font-size: 0.85rem; color: var(--moon); white-space: nowrap; }
+    .mission__reward { font-size: 0.85rem; color: var(--sub-label); white-space: nowrap; }
     .bar {
       margin-top: 10px; height: 8px; border-radius: 99px;
       background: rgba(255, 255, 255, 0.1); overflow: hidden;
     }
     .bar > i {
       display: block; height: 100%; border-radius: inherit;
-      background: linear-gradient(90deg, var(--sakura), var(--lantern));
+      background: linear-gradient(90deg, var(--progress-bar), var(--cta-button));
       transform-origin: left; transform: scaleX(var(--p, 0));
     }
     .mission__meta { margin-top: 6px; font-size: 0.82rem; color: var(--ink-dim); }
@@ -111,7 +111,7 @@
       width: 100%;
       min-height: 46px; border: 0; border-radius: 14px;
       font-weight: 800; font-size: 1.05rem; color: #2a0d02;
-      background: linear-gradient(180deg, var(--lantern-glow), var(--lantern));
+      background: linear-gradient(180deg, var(--cta-button-light), var(--cta-button));
       box-shadow: 0 4px 0 #b53f1c;
       cursor: pointer;
     }
